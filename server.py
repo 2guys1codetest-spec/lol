@@ -2,22 +2,22 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Test-Route / Server-Ping für die Statusanzeige im Spiel
+# Der wichtigste Ping-Endpunkt für den Launcher-Status
 @app.route('/ping', methods=['GET'])
 def ping():
     return jsonify({"status": "online"}), 200
 
-# Login-Route
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    
-    # Hier deine Login-Logik einfügen
-    if username == "admin" and password == "1234":
-        return jsonify({"message": "Login erfolgreich!", "success": True}), 200
-    return jsonify({"message": "Ungültige Anmeldedaten.", "success": False}), 401
+    data = request.json
+    # Hier deine Login-Logik
+    return jsonify({"success": True, "message": "Erfolgreich angemeldet!"})
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    # Hier deine Register-Logik
+    return jsonify({"success": True, "message": "Erfolgreich registriert!"})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=10000)
